@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Http\Controllers\api\v1\ApiController;
 use App\Http\Controllers\api\v1\ClientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +21,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\v1'], function (){
+Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], function (){
+
+    Route::post("register", [ApiController::class, "register"]);
+    Route::post("login", [ApiController::class, "login"]);
+
+    Route::group([
+        "middleware" => ["auth:api"]
+    ], function(){
+        Route::get("profile", [ApiController::class, "profile"]);
+        Route::get("refresh", [ApiController::class, "refreshToken"]);
+        Route::get("logout", [ApiController::class, "logout"]);
+    });
+
     Route::apiResource('clients', ClientController::class);
 });
