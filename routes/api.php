@@ -36,3 +36,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
 
     Route::apiResource('clients', ClientController::class);
 });
+
+Route::fallback(function(){
+    return response()->json(['message' => 'Not Found!'], 404);
+});
