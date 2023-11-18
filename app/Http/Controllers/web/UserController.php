@@ -4,6 +4,7 @@ namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -34,12 +35,15 @@ class UserController extends Controller
             "email" => "required|email",
         ]);
 
-        //todo ADD password updating
-
         $user = User::findOrFail($id);
 
         $user -> name = request('name');
         $user -> email = request('email');
+
+        $role = $user -> getRoleNames() -> first();
+
+        $user -> removeRole($role);
+        $user -> assignRole(request('role'));
 
         $user -> save();
 
@@ -53,11 +57,15 @@ class UserController extends Controller
         request() -> validate([
             "name" => "required",
             "email" => "required|email",
-
+            "password" => "required",
+            "role" => "required"
         ]);
 
         $user -> name = request('name');
         $user -> email = request('email');
+        $user -> password = Hash::make(request('password'));
+
+        $user -> assignRole(request('role'));
 
         $user -> save();
 

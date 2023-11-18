@@ -53,6 +53,27 @@
                                                         <input type="email" class="form-control" id="user-email"
                                                                name="email" value="{{$user->email}}">
                                                     </div>
+
+                                                    <div class="form-group">
+                                                        <label>
+                                                            Role:
+                                                        </label>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="role" id="user-role"
+                                                                   value="User" checked>
+                                                            <label class="form-check-label" for="user-role">
+                                                                User
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="role" id="admin-role"
+                                                                   value="Admin">
+                                                            <label class="form-check-label" for="admin-role">
+                                                                Admin
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
                                                     <!-- Modal Footer -->
                                                     <div class="modal-footer">
                                                         <button type="submit" class="btn btn-success">Update</button>
@@ -109,7 +130,30 @@
                                             <label for="user-email">Email:</label>
                                             <input type="email" class="form-control" id="user-email" name="email">
                                         </div>
+                                        <div class="form-group">
+                                            <label for="user-password">Password:</label>
+                                            <input type="password" class="form-control" id="user-password" name="password">
+                                        </div>
 
+                                        <div class="form-group">
+                                            <label>
+                                                Role:
+                                            </label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="role" id="user-role"
+                                                       value="User" checked>
+                                                <label class="form-check-label" for="user-role">
+                                                    User
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="role" id="admin-role"
+                                                       value="Admin">
+                                                <label class="form-check-label" for="admin-role">
+                                                    Admin
+                                                </label>
+                                            </div>
+                                        </div>
                                         <!-- Modal Footer -->
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-success">Add</button>
