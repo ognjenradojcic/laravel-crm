@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\web\ClientController;
 use App\Http\Controllers\web\HomeController;
+use App\Http\Controllers\web\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,11 +20,19 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home') -> middleware('auth');
 
-
-
+//Clients routes
+Route::get('/clients', [ClientController::class, 'index'])-> middleware('auth');
 Route::group(['middleware' => ['role:Admin|Super-Admin']], function () {
-    Route::get('/clients', [ClientController::class, 'index'])-> middleware('auth');
     Route::post('/clients', [ClientController::class, 'store'])->middleware('auth');
     Route::delete('/clients/{id}', [ClientController::class, 'destroy'])->middleware('auth');
     Route::put('/clients/{id}', [ClientController::class, 'update'])->middleware('auth');
 });
+
+//Users routes
+Route::group(['middleware' => ['role:Super-Admin']], function () {
+    Route::get('/users', [UserController::class, 'index'])-> middleware('auth');
+    Route::post('/users', [UserController::class, 'store'])->middleware('auth');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->middleware('auth');
+    Route::put('/users/{id}', [UserController::class, 'update'])->middleware('auth');
+});
+

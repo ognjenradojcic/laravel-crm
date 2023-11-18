@@ -15,6 +15,9 @@
                 <ul class="list-group list-group-flush">
                     <a href=""><li class="list-group-item">Companies</li></a>
                     <a href="/clients"><li class="list-group-item">Clients</li></a>
+                    @can('manageUsers')
+                    <a href="/users"><li class="list-group-item">Users</li></a>
+                    @endcan
                 </ul>
             </div>
         </div>

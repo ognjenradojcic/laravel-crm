@@ -29,6 +29,14 @@ class ClientController extends Controller
 
     public function update($id){
 
+        request() -> validate([
+            "name" => "required",
+            "email" => "required|email",
+            "number" => "required",
+            "address" => "required",
+            "industry" => "required",
+        ]);
+
         $client = Client::findOrFail($id);
 
         $client -> name = request('name');
@@ -45,6 +53,14 @@ class ClientController extends Controller
     public function store(){
 
         $client = new Client();
+
+        request() -> validate([
+            "name" => "required",
+            "email" => "required|email",
+            "number" => "required",
+            "address" => "required",
+            "industry" => "required",
+        ]);
 
         $client -> name = request('name');
         $client -> email = request('email');
