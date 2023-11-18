@@ -32,9 +32,8 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         Route::get("profile", [ApiController::class, "profile"]);
         Route::get("refresh", [ApiController::class, "refreshToken"]);
         Route::get("logout", [ApiController::class, "logout"]);
+        Route::apiResource('clients', ClientController::class);
     });
-
-    Route::apiResource('clients', ClientController::class);
 });
 
 Route::fallback(function(){
