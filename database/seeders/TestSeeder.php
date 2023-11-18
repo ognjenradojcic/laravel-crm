@@ -30,10 +30,10 @@ class TestSeeder extends Seeder
 
 
         // create roles and assign existing permissions
-        $role1 = Role::create(['name' => 'user']);
+        $role1 = Role::create(['name' => 'User']);
         $role1->givePermissionTo('viewClients');
 
-        $role2 = Role::create(['name' => 'admin']);
+        $role2 = Role::create(['name' => 'Admin']);
         $role2->givePermissionTo('manageClients');
         $role2->givePermissionTo('viewClients');
 

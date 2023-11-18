@@ -19,7 +19,11 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home') -> middleware('auth');
 
-Route::get('/clients', [ClientController::class, 'index'])-> middleware('auth');
-Route::post('/clients', [ClientController::class, 'store'])-> middleware('auth');
-Route::delete('/clients/{id}', [ClientController::class, 'destroy'])-> middleware('auth');
-Route::put('/clients/{id}', [ClientController::class, 'update'])-> middleware('auth');
+
+
+Route::group(['middleware' => ['role:Admin|Super-Admin']], function () {
+    Route::get('/clients', [ClientController::class, 'index'])-> middleware('auth');
+    Route::post('/clients', [ClientController::class, 'store'])->middleware('auth');
+    Route::delete('/clients/{id}', [ClientController::class, 'destroy'])->middleware('auth');
+    Route::put('/clients/{id}', [ClientController::class, 'update'])->middleware('auth');
+});
