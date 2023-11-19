@@ -27,7 +27,6 @@ class ApiController extends Controller
         $user -> assignRole("User");
 
         return response() -> json([
-            "status" => true,
             "message" => "User registered successfully"
         ]);
     }
@@ -47,14 +46,12 @@ class ApiController extends Controller
         if(!empty($token)){
 
             return response() -> json([
-                "status" => true,
                 "message" => "User logged successfully",
                 "token" => $token
             ]);
         }
 
         return response()->json([
-            "status" => false,
             "message" => "Invalid details"
         ]);
     }
@@ -64,7 +61,6 @@ class ApiController extends Controller
         $userData = auth()->user();
 
         return response() -> json([
-            "status" => true,
             "message" => "Profile data",
             "data" => $userData
         ]);
@@ -75,7 +71,6 @@ class ApiController extends Controller
         $newToken = auth() -> refresh();
 
         return response() -> json([
-                "status" => true,
                 "message" => "New access token",
                 "token" => $newToken
             ]);
@@ -86,7 +81,6 @@ class ApiController extends Controller
         auth() -> logout();
 
         return response()-> json([
-            "status" => true,
             "message" => "User logged out successfully"
         ]);
     }
