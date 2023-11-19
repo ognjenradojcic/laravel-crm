@@ -38,17 +38,22 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
         //Clients
         Route::get('clients', [ClientController::class, "index"]);
         Route::get('clients/{id}', [ClientController::class, "show"]);
-        Route::post('clients', [ClientController::class, "store"]);
-        Route::delete('clients/{id}', [ClientController::class, "destroy"]);
-        Route::put('clients/{id}', [ClientController::class, "update"]);
 
+        Route::group(['middleware' => ['role:Admin|Super-Admin']], function () {
+            Route::post('clients', [ClientController::class, "store"]);
+            Route::delete('clients/{id}', [ClientController::class, "destroy"]);
+            Route::put('clients/{id}', [ClientController::class, "update"]);
+        });
 
         //Companies
         Route::get('companies', [CompanyController::class, "index"]);
         Route::get('companies/{id}', [CompanyController::class, "show"]);
-        Route::post('companies', [CompanyController::class, "store"]);
-        Route::delete('companies/{id}', [CompanyController::class, "destroy"]);
-        Route::put('companies/{id}', [CompanyController::class, "update"]);
+
+        Route::group(['middleware' => ['role:Admin|Super-Admin']], function () {
+            Route::post('companies', [CompanyController::class, "store"]);
+            Route::delete('companies/{id}', [CompanyController::class, "destroy"]);
+            Route::put('companies/{id}', [CompanyController::class, "update"]);
+        });
     });
 });
 

@@ -26,10 +26,11 @@
                         <td>{{$company -> address}}</td>
                         <td>{{$company -> industry}}</td>
                         <td>{{$company -> eid}}</td>
-                        <td>
+                        <td><ul>
                             @foreach($company -> clients as $client)
-                            {{$client -> name}}
+                            <li>{{$client -> name}}</li>
                             @endforeach
+                            </ul>
                         </td>
 
                         @can('manageClients')
