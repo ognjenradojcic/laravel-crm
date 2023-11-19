@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Dto\company\CompanyData;
 use App\Models\Client;
 use App\Models\Company;
 use Illuminate\Http\Request;
@@ -17,24 +18,9 @@ class CompanyController extends Controller
         return Company::findOrFail($id);
     }
 
-    public function store(Request $request){
-        $request->validate([
-            "name" => "required",
-            "email" => "required|email",
-            "number" => "required",
-            "address" => "required",
-            "industry" => "required",
-            "eid" => "required"
-        ]);
+    public function store(CompanyData $companyData){
 
-        $company = Company::create([
-            "name" => $request -> name,
-            "email" => $request -> email,
-            "number" => $request -> number,
-            "address" => $request -> address,
-            "industry" => $request -> industry,
-            "eid" => $request -> eid,
-        ]);
+        $company = Company::create($companyData -> toArray());
 
         return response() -> json($company);
     }
@@ -49,26 +35,11 @@ class CompanyController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id){
-        $request->validate([
-            "name" => "required",
-            "email" => "required|email",
-            "number" => "required",
-            "address" => "required",
-            "industry" => "required",
-            "eid" => "required"
-        ]);
+    public function update(CompanyData $companyData, $id){
 
         $company = Company::findOrFail($id);
 
-        $company->name = $request -> name;
-        $company->email = $request -> email;
-        $company->number = $request -> number;
-        $company->address = $request -> address;
-        $company->industry = $request -> industry;
-        $company->eid = $request -> eid;
-
-        $company -> save();
+        $company -> update($companyData -> toArray());
 
         return response() -> json([
             'message' => "Company updated"

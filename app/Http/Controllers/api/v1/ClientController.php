@@ -18,15 +18,9 @@ class ClientController extends Controller
         return Client::findOrFail($id);
     }
 
-    public function store(ClientData $data){
-        $client = Client::create([
-            "name" => $data -> name,
-            "email" => $data -> email,
-            "number" => $data -> number,
-            "address" => $data -> address,
-            "industry" => $data -> industry,
-            "company_id" => $data -> company_id,
-        ]);
+    public function store(ClientData $clientData){
+
+        $client = Client::create($clientData -> toArray());
 
         return response() -> json($client);
     }
@@ -41,18 +35,11 @@ class ClientController extends Controller
         ]);
     }
 
-    public function update(ClientData $data, $id){
+    public function update(ClientData $clientData, $id){
 
         $client = Client::findOrFail($id);
 
-        $client->name = $data -> name;
-        $client->email = $data -> email;
-        $client->number = $data -> number;
-        $client->address = $data -> address;
-        $client->industry = $data -> industry;
-        $client->company_id = $data -> company_id;
-
-        $client -> save();
+        $client -> update($clientData -> toArray());
 
         return response() -> json([
             'message' => "Client updated"

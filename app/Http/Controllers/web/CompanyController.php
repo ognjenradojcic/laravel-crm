@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Dto\company\CompanyData;
 use App\Models\Company;
 
 class CompanyController extends Controller
@@ -28,44 +29,21 @@ class CompanyController extends Controller
 
     public function update($id){
 
+        $companyData = CompanyData::from(request());
+
         $company = Company::findOrFail($id);
 
-        $this->saveCompany($company);
+        $company -> update($companyData -> toArray());
 
         return redirect("/companies");
     }
 
     public function store(){
 
-        $company = new Company();
+        $companyData = CompanyData::from(request());
 
-        $this->saveCompany($company);
+        Company::create($companyData -> toArray());
 
         return redirect("/companies");
-    }
-
-    /**
-     * @param Company $company
-     * @return void
-     */
-    public function saveCompany(Company $company): void
-    {
-        request()->validate([
-            "name" => "required",
-            "email" => "required|email",
-            "number" => "required",
-            "address" => "required",
-            "industry" => "required",
-            "eid" => "required"
-        ]);
-
-        $company->name = request('name');
-        $company->email = request('email');
-        $company->number = request('number');
-        $company->address = request('address');
-        $company->industry = request('industry');
-        $company->eid = request('eid');
-
-        $company->save();
     }
 }

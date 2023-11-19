@@ -13,10 +13,10 @@
                         Admin Panel
                     </div>
                 <ul class="list-group list-group-flush">
-                    <a href="/companies"><li class="list-group-item">Companies</li></a>
-                    <a href="/clients"><li class="list-group-item">Clients</li></a>
+                    <a href="/companies" style="font-size: 1.2rem"><li class="list-group-item">Companies</li></a>
+                    <a href="/clients" style="font-size: 1.2rem"><li class="list-group-item">Clients</li></a>
                     @can('manageUsers')
-                    <a href="/users"><li class="list-group-item">Users</li></a>
+                    <a href="/users" style="font-size: 1.2rem"><li class="list-group-item">Users</li></a>
                     @endcan
                 </ul>
             </div>

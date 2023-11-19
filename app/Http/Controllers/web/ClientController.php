@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Dto\client\ClientData;
 use App\Models\Client;
 use App\Models\Company;
+use Illuminate\Support\Facades\Log;
+use Monolog\Level;
 
 class ClientController extends Controller
 {
@@ -34,25 +36,11 @@ class ClientController extends Controller
 
     public function update($id){
 
-        request() -> validate([
-            "name" => "required",
-            "email" => "required|email",
-            "number" => "required",
-            "address" => "required",
-            "industry" => "required",
-            "company_id" => "required"
-        ]);
+        $clientData = ClientData::from(request());
 
         $client = Client::findOrFail($id);
 
-        $client -> name = request('name');
-        $client -> email = request('email');
-        $client -> number = request('number');
-        $client -> address = request('address');
-        $client -> industry = request('industry');
-        $client -> company_id = request('company_id');
-
-        $client -> save();
+        $client -> update($clientData -> toArray());
 
         return redirect("/clients");
     }
