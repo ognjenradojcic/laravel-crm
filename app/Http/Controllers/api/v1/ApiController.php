@@ -71,7 +71,6 @@ class ApiController extends Controller
         $newToken = auth() -> refresh();
 
         return response() -> json([
-                "message" => "New access token",
                 "token" => $newToken
             ]);
 
