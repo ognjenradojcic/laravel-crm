@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\api\v1\ApiController;
 use App\Http\Controllers\api\v1\ClientController;
+use App\Http\Controllers\api\v1\CompanyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,13 +27,28 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\api\v1'], f
     Route::post("register", [ApiController::class, "register"]);
     Route::post("login", [ApiController::class, "login"]);
 
+
     Route::group([
         "middleware" => ["auth:api"]
     ], function(){
         Route::get("profile", [ApiController::class, "profile"]);
         Route::get("refresh", [ApiController::class, "refreshToken"]);
         Route::get("logout", [ApiController::class, "logout"]);
-        Route::apiResource('clients', ClientController::class);
+
+        //Clients
+        Route::get('clients', [ClientController::class, "index"]);
+        Route::get('clients/{id}', [ClientController::class, "show"]);
+        Route::post('clients', [ClientController::class, "store"]);
+        Route::delete('clients/{id}', [ClientController::class, "destroy"]);
+        Route::put('clients/{id}', [ClientController::class, "update"]);
+
+
+        //Companies
+        Route::get('companies', [CompanyController::class, "index"]);
+        Route::get('companies/{id}', [CompanyController::class, "show"]);
+        Route::post('companies', [CompanyController::class, "store"]);
+        Route::delete('companies/{id}', [CompanyController::class, "destroy"]);
+        Route::put('companies/{id}', [CompanyController::class, "update"]);
     });
 });
 

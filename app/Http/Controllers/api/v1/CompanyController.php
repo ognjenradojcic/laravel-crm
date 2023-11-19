@@ -4,17 +4,17 @@ namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
-
-class ClientController extends Controller
+class CompanyController extends Controller
 {
     public function index(){
-        return Client::all();
+        return Company::all();
     }
 
     public function show($id){
-        return Client::findOrFail($id);
+        return Company::findOrFail($id);
     }
 
     public function store(Request $request){
@@ -24,28 +24,28 @@ class ClientController extends Controller
             "number" => "required",
             "address" => "required",
             "industry" => "required",
-            "company_id" => "required"
+            "eid" => "required"
         ]);
 
-        $client = Client::create([
+        $company = Company::create([
             "name" => $request -> name,
             "email" => $request -> email,
             "number" => $request -> number,
             "address" => $request -> address,
             "industry" => $request -> industry,
-            "company_id" => $request -> company_id,
+            "eid" => $request -> eid,
         ]);
 
-        return response() -> json($client);
+        return response() -> json($company);
     }
 
     public function destroy($id){
-        $client = Client::findOrFail($id);
+        $company = Company::findOrFail($id);
 
-        $client -> delete();
+        $company -> delete();
 
         return response() -> json([
-            'message' => "Client deleted"
+            'message' => "Company deleted"
         ]);
     }
 
@@ -56,22 +56,22 @@ class ClientController extends Controller
             "number" => "required",
             "address" => "required",
             "industry" => "required",
-            "company_id" => "required"
+            "eid" => "required"
         ]);
 
-        $client = Client::findOrFail($id);
+        $company = Company::findOrFail($id);
 
-        $client->name = $request -> name;
-        $client->email = $request -> email;
-        $client->number = $request -> number;
-        $client->address = $request -> address;
-        $client->industry = $request -> industry;
-        $client->company_id = $request -> company_id;
+        $company->name = $request -> name;
+        $company->email = $request -> email;
+        $company->number = $request -> number;
+        $company->address = $request -> address;
+        $company->industry = $request -> industry;
+        $company->eid = $request -> eid;
 
-        $client -> save();
+        $company -> save();
 
         return response() -> json([
-            'message' => "Client updated"
+            'message' => "Company updated"
         ]);
     }
 }
