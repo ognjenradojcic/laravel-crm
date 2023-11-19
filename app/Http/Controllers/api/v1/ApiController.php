@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Dto\auth\UserLoginData;
+use App\Http\Dto\auth\UserRegisterData;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -10,18 +12,12 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ApiController extends Controller
 {
-    public function register(Request $request){
-
-        $request -> validate([
-            "name" => "required",
-            "email" => "required|email|unique:users",
-            "password" => "required|confirmed"
-        ]);
+    public function register(UserRegisterData $data){
 
         $user = User::create([
-            'name' => $request -> name,
-            'email' => $request -> email,
-            'password' => Hash::make($request -> password)
+            'name' => $data -> name,
+            'email' => $data -> email,
+            'password' => Hash::make($data -> password)
         ]);
 
         $user -> assignRole("User");
@@ -31,20 +27,14 @@ class ApiController extends Controller
         ]);
     }
 
-    public function login(Request $request){
-
-        $request -> validate([
-            "email" => "required|email",
-            "password" => "required"
-        ]);
+    public function login(UserLoginData $data){
 
         $token = JWTAuth::attempt([
-            "email" => $request->email,
-            "password" => $request->password
+            "email" => $data->email,
+            "password" => $data->password
         ]);
 
         if(!empty($token)){
-
             return response() -> json([
                 "message" => "User logged successfully",
                 "token" => $token

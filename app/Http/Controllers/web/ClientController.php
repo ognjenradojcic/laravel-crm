@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Dto\client\ClientData;
 use App\Models\Client;
 use App\Models\Company;
 
@@ -58,25 +59,9 @@ class ClientController extends Controller
 
     public function store(){
 
-        $client = new Client();
+        $clientData = ClientData::from(request());
 
-        request() -> validate([
-            "name" => "required",
-            "email" => "required|email",
-            "number" => "required",
-            "address" => "required",
-            "industry" => "required",
-            "company_id" => "required"
-        ]);
-
-        $client -> name = request('name');
-        $client -> email = request('email');
-        $client -> number = request('number');
-        $client -> address = request('address');
-        $client -> industry = request('industry');
-        $client -> company_id = request('company_id');
-
-        $client -> save();
+        Client::create($clientData -> toArray());
 
         return redirect("/clients");
     }

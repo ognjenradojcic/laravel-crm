@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Dto\client\ClientData;
 use App\Models\Client;
 use Illuminate\Http\Request;
 
@@ -17,23 +18,14 @@ class ClientController extends Controller
         return Client::findOrFail($id);
     }
 
-    public function store(Request $request){
-        $request->validate([
-            "name" => "required",
-            "email" => "required|email",
-            "number" => "required",
-            "address" => "required",
-            "industry" => "required",
-            "company_id" => "required"
-        ]);
-
+    public function store(ClientData $data){
         $client = Client::create([
-            "name" => $request -> name,
-            "email" => $request -> email,
-            "number" => $request -> number,
-            "address" => $request -> address,
-            "industry" => $request -> industry,
-            "company_id" => $request -> company_id,
+            "name" => $data -> name,
+            "email" => $data -> email,
+            "number" => $data -> number,
+            "address" => $data -> address,
+            "industry" => $data -> industry,
+            "company_id" => $data -> company_id,
         ]);
 
         return response() -> json($client);
@@ -49,24 +41,16 @@ class ClientController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id){
-        $request->validate([
-            "name" => "required",
-            "email" => "required|email",
-            "number" => "required",
-            "address" => "required",
-            "industry" => "required",
-            "company_id" => "required"
-        ]);
+    public function update(ClientData $data, $id){
 
         $client = Client::findOrFail($id);
 
-        $client->name = $request -> name;
-        $client->email = $request -> email;
-        $client->number = $request -> number;
-        $client->address = $request -> address;
-        $client->industry = $request -> industry;
-        $client->company_id = $request -> company_id;
+        $client->name = $data -> name;
+        $client->email = $data -> email;
+        $client->number = $data -> number;
+        $client->address = $data -> address;
+        $client->industry = $data -> industry;
+        $client->company_id = $data -> company_id;
 
         $client -> save();
 
