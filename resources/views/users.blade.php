@@ -46,12 +46,12 @@
                                                     <div class="form-group">
                                                         <label for="user-name">Name:</label>
                                                         <input type="text" class="form-control" id="user-name"
-                                                               name="name" value="{{$user->name}}">
+                                                               name="name" value="{{$user->name}}" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="user-email">Email:</label>
                                                         <input type="email" class="form-control" id="user-email"
-                                                               name="email" value="{{$user->email}}">
+                                                               name="email" value="{{$user->email}}" required>
                                                     </div>
 
                                                     <div class="form-group">
@@ -124,15 +124,15 @@
                                         @method('POST')
                                         <div class="form-group">
                                             <label for="user-name">Name:</label>
-                                            <input type="text" class="form-control" id="user-name" name="name">
+                                            <input type="text" class="form-control" id="user-name" name="name" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="user-email">Email:</label>
-                                            <input type="email" class="form-control" id="user-email" name="email">
+                                            <input type="email" class="form-control" id="user-email" name="email" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="user-password">Password:</label>
-                                            <input type="password" class="form-control" id="user-password" name="password">
+                                            <input type="password" class="form-control" id="user-password" name="password" required>
                                         </div>
 
                                         <div class="form-group">

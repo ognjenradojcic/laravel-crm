@@ -62,6 +62,33 @@ class TestSeeder extends Seeder
         ]);
         $user->assignRole($role3);
 
+        DB::table('companies') -> insert([
+            'name' => "Google",
+            'email' => "google@example.com",
+            'number' => "064212312",
+            'address' => "Bulevar",
+            'industry' => "IT",
+            'eid' => "938231"
+        ]);
+
+        DB::table('companies') -> insert([
+            'name' => "Amazon",
+            'email' => "amazon@example.com",
+            'number' => "064987321",
+            'address' => "Example",
+            'industry' => "Sales",
+            'eid' => "485213"
+        ]);
+
+        DB::table('companies') -> insert([
+            'name' => "Netflix",
+            'email' => "netflix@example.com",
+            'number' => "062001122",
+            'address' => "Demo",
+            'industry' => "Streaming",
+            'eid' => "632123"
+        ]);
+
         // Create clients
 
         DB::table('clients') -> insert([
@@ -69,7 +96,8 @@ class TestSeeder extends Seeder
             'email' => "fake@example.com",
             'number' => "065123123",
             'address' => "Bulevar",
-            'industry' => "IT"
+            'industry' => "IT",
+            'company_id' => 1
         ]);
 
         DB::table('clients') -> insert([
@@ -77,7 +105,8 @@ class TestSeeder extends Seeder
             'email' => "example@example.com",
             'number' => "065000111",
             'address' => "Example",
-            'industry' => "Sales"
+            'industry' => "Sales",
+            'company_id' => 2
         ]);
 
         DB::table('clients') -> insert([
@@ -85,7 +114,16 @@ class TestSeeder extends Seeder
             'email' => "demo@example.com",
             'number' => "064333222",
             'address' => "Demo",
-            'industry' => "Marketing"
+            'industry' => "Marketing",
+            'company_id' => 1
+        ]);
+        DB::table('clients') -> insert([
+            'name' => "Testing",
+            'email' => "test@example.com",
+            'number' => "064999666",
+            'address' => "Testing",
+            'industry' => "QA",
+            'company_id' => 3
         ]);
     }
 }

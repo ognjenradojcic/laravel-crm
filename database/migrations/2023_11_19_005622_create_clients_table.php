@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('number');
             $table->string('address');
             $table->string('industry');
-            $table->unsignedInteger('company_id');
+            $table->unsignedBigInteger('company_id');
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies')

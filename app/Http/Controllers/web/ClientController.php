@@ -4,6 +4,7 @@ namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\Company;
 
 class ClientController extends Controller
 {
@@ -12,8 +13,11 @@ class ClientController extends Controller
 
         $clients = Client::all();
 
+        $companies = Company::all();
+
         return view('client',[
-            'clients' => $clients
+            'clients' => $clients,
+            'companies' => $companies
         ]);
     }
 
@@ -35,6 +39,7 @@ class ClientController extends Controller
             "number" => "required",
             "address" => "required",
             "industry" => "required",
+            "company_id" => "required"
         ]);
 
         $client = Client::findOrFail($id);
@@ -44,6 +49,7 @@ class ClientController extends Controller
         $client -> number = request('number');
         $client -> address = request('address');
         $client -> industry = request('industry');
+        $client -> company_id = request('company_id');
 
         $client -> save();
 
@@ -60,6 +66,7 @@ class ClientController extends Controller
             "number" => "required",
             "address" => "required",
             "industry" => "required",
+            "company_id" => "required"
         ]);
 
         $client -> name = request('name');
@@ -67,6 +74,7 @@ class ClientController extends Controller
         $client -> number = request('number');
         $client -> address = request('address');
         $client -> industry = request('industry');
+        $client -> company_id = request('company_id');
 
         $client -> save();
 

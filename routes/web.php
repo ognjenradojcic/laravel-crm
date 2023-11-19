@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\web\ClientController;
+use App\Http\Controllers\web\CompanyController;
 use App\Http\Controllers\web\HomeController;
 use App\Http\Controllers\web\UserController;
+use App\Models\Company;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +28,14 @@ Route::group(['middleware' => ['role:Admin|Super-Admin']], function () {
     Route::post('/clients', [ClientController::class, 'store'])->middleware('auth');
     Route::delete('/clients/{id}', [ClientController::class, 'destroy'])->middleware('auth');
     Route::put('/clients/{id}', [ClientController::class, 'update'])->middleware('auth');
+});
+
+//Companies routes
+Route::get('/companies', [CompanyController::class, 'index'])-> middleware('auth');
+Route::group(['middleware' => ['role:Admin|Super-Admin']], function () {
+    Route::post('/companies', [CompanyController::class, 'store'])->middleware('auth');
+    Route::delete('/companies/{id}', [CompanyController::class, 'destroy'])->middleware('auth');
+    Route::put('/companies/{id}', [CompanyController::class, 'update'])->middleware('auth');
 });
 
 //Users routes
