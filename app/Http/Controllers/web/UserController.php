@@ -3,11 +3,19 @@
 namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Dto\user\CreateUserData;
+use App\Http\Dto\user\UpdateUserData;
+use App\Http\Services\UserService;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
+
+    public function __construct(protected UserService $service)
+    {
+    }
 
     public function index(){
 
@@ -30,44 +38,18 @@ class UserController extends Controller
 
     public function update($id){
 
-        request() -> validate([
-            "name" => "required",
-            "email" => "required|email",
-        ]);
+        $userData = UpdateUserData::from(request());
 
-        $user = User::findOrFail($id);
-
-        $user -> name = request('name');
-        $user -> email = request('email');
-
-        $role = $user -> getRoleNames() -> first();
-
-        $user -> removeRole($role);
-        $user -> assignRole(request('role'));
-
-        $user -> save();
+        $this->service->update($userData, $id);
 
         return redirect("/users");
     }
 
     public function store(){
 
-        $user = new User();
+        $userData = CreateUserData::from(request());
 
-        request() -> validate([
-            "name" => "required",
-            "email" => "required|email",
-            "password" => "required",
-            "role" => "required"
-        ]);
-
-        $user -> name = request('name');
-        $user -> email = request('email');
-        $user -> password = Hash::make(request('password'));
-
-        $user -> assignRole(request('role'));
-
-        $user -> save();
+        $this->service->create($userData);
 
         return redirect("/users");
     }

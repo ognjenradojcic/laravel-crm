@@ -12,6 +12,10 @@ class CompanyService
         return Company::all();
     }
 
+    public function readById($id){
+        return Company::findOrFail($id);
+    }
+
     public function update($companyData, $id){
         $company = Company::findOrFail($id);
         $company -> update($companyData -> toArray());

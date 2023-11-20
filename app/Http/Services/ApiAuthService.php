@@ -5,7 +5,7 @@ namespace App\Http\Services;
 use App\Models\Client;
 use Illuminate\Database\Eloquent\Collection;
 
-class ClientService
+class ApiAuthService
 {
     public function readAll(): Collection
     {
