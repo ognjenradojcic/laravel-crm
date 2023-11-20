@@ -3,32 +3,27 @@
 namespace App\Http\Services;
 
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ApiAuthService
 {
-    public function readAll(): Collection
-    {
-        return Client::all();
+    public function login($userLoginData){
+        return JWTAuth::attempt([
+            "email" => $userLoginData->email,
+            "password" => $userLoginData->password
+        ]);
     }
 
-    public function readById($id){
-        return Client::findOrFail($id);
-    }
+    public function register($userRegisterData){
+        $user = User::create([
+            'name' => $userRegisterData -> name,
+            'email' => $userRegisterData -> email,
+            'password' => Hash::make($userRegisterData -> password)
+        ]);
 
-
-    public function update($clientData, $id){
-        $client = Client::findOrFail($id);
-        $client -> update($clientData -> toArray());
-    }
-
-    public function delete($id){
-        $client = Client::findOrFail($id);
-
-        $client -> delete();
-    }
-
-    public function create($clientData){
-        return Client::create($clientData -> toArray());
+        $user -> assignRole("User");
     }
 }
