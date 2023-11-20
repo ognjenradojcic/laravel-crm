@@ -4,6 +4,8 @@ namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Dto\client\ClientData;
+use App\Http\Services\ClientService;
+use App\Http\Services\CompanyService;
 use App\Models\Client;
 use App\Models\Company;
 use Illuminate\Support\Facades\Log;
@@ -12,11 +14,16 @@ use Monolog\Level;
 class ClientController extends Controller
 {
 
+
+    public function __construct(protected ClientService $service, protected CompanyService $companyService)
+    {
+    }
+
     public function index(){
 
-        $clients = Client::all();
+        $clients = $this -> service -> readAll();
 
-        $companies = Company::all();
+        $companies = $this -> companyService -> readAll();
 
         return view('client',[
             'clients' => $clients,
@@ -26,9 +33,7 @@ class ClientController extends Controller
 
     public function destroy($id){
 
-        $client = Client::findOrFail($id);
-
-        $client -> delete();
+        $this -> service -> delete($id);
 
         return redirect("/clients");
 
@@ -38,9 +43,7 @@ class ClientController extends Controller
 
         $clientData = ClientData::from(request());
 
-        $client = Client::findOrFail($id);
-
-        $client -> update($clientData -> toArray());
+        $this -> service -> update($clientData, $id);
 
         return redirect("/clients");
     }
@@ -49,7 +52,7 @@ class ClientController extends Controller
 
         $clientData = ClientData::from(request());
 
-        Client::create($clientData -> toArray());
+        $this -> service -> create($clientData);
 
         return redirect("/clients");
     }

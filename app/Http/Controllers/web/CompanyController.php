@@ -4,13 +4,19 @@ namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Dto\company\CompanyData;
+use App\Http\Services\CompanyService;
 use App\Models\Company;
 
 class CompanyController extends Controller
 {
+
+    public function __construct(protected CompanyService $service)
+    {
+    }
+
     public function index(){
 
-        $companies = Company::all();
+        $companies = $this -> service -> readAll();
 
         return view('company',[
             'companies' => $companies
@@ -19,9 +25,7 @@ class CompanyController extends Controller
 
     public function destroy($id){
 
-        $company = Company::findOrFail($id);
-
-        $company -> delete();
+        $this -> service -> delete($id);
 
         return redirect("/companies");
 
@@ -31,9 +35,7 @@ class CompanyController extends Controller
 
         $companyData = CompanyData::from(request());
 
-        $company = Company::findOrFail($id);
-
-        $company -> update($companyData -> toArray());
+        $this -> service -> update($companyData, $id);
 
         return redirect("/companies");
     }
@@ -42,7 +44,7 @@ class CompanyController extends Controller
 
         $companyData = CompanyData::from(request());
 
-        Company::create($companyData -> toArray());
+        $this -> service -> create($companyData);
 
         return redirect("/companies");
     }
